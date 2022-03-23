@@ -90,21 +90,19 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
   BLAS AXPY
 */
 
-/*
 
-void mnblas_saxpy(const int N, const float alpha, const float *X,
+
+void mncblas_saxpy(const int N, const float a, const float *X,
                  const int incX, float *Y, const int incY);
 
-void mnblas_daxpy(const int N, const double alpha, const double *X,
+void mncblas_daxpy(const int N, const double a, const double *X,
                  const int incX, double *Y, const int incY);
 
-void mnblas_caxpy(const int N, const void *alpha, const void *X,
+void mncblas_caxpy(const int N, const void *a, const void *X,
                  const int incX, void *Y, const int incY);
 
-void mnblas_zaxpy(const int N, const void *alpha, const void *X,
+void mncblas_zaxpy(const int N, const void *a, const void *X,
                  const int incX, void *Y, const int incY);
-
-*/
 
 /*
 

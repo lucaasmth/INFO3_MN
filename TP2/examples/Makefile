@@ -1,4 +1,4 @@
-all: test_complexe3 test_complexe2 test_complexe test_dot test_dot_dyn test_swap
+all: test_complexe3 test_complexe2 test_complexe test_dot test_dot_dyn test_swap test_axpy
 
 INC_DIR=../include
 
@@ -18,6 +18,9 @@ test_dot: test_dot.o flop.o $(LIB_DIR)/libmnblas.a
 test_swap: test_swap.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_swap test_swap.o flop.o $(OPTIONS_LINK_STATIC)
 
+test_axpy: test_axpy.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_axpy test_axpy.o flop.o $(OPTIONS_LINK_STATIC)
+
 flop.o: flop.c flop.h
 	gcc $(OPTIONS_COMPIL) -c flop.c
 
@@ -29,6 +32,10 @@ test_dot.o: test_dot.c $(INC_DIR)/mnblas.h
 
 test_swap.o: test_swap.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_swap.c
+
+test_axpy.o: test_axpy.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_axpy.c
+
 
 test_complexe.o: test_complexe.c  $(INC_DIR)/complexe.h
 	gcc $(OPTIONS_COMPIL) -c test_complexe.c

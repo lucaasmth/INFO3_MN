@@ -1,7 +1,6 @@
 #include "mnblas.h"
 #include <stdio.h>
-#include "../include/mnblas.h"
-#include "../include/complexe2.h"
+#include "complexe.h"
 /*
 float mncblas_sdot(const int N, const float *X, const int incX, 
                  const float *Y, const int incY)
@@ -66,7 +65,7 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
     dot = add_complexe_float(dot, multiplication);  
     j += incY;
   }
-  complexe_float_t dotu = dot;
+  *(complexe_float_t *)dotu = dot;
 }
 
 void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
@@ -85,7 +84,7 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
     dot = add_complexe_float(dot, multiplication);  
     j += incY;
   }
-  complexe_float_t dotc = dot;
+  *(complexe_float_t *)dotc = dot;
 }
 
 void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
@@ -101,7 +100,7 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
     dot = add_complexe_double(dot, multiplication);  
     j += incY;
   }
-  complexe_double_t dotu = dot;
+*(complexe_double_t *)dotu = dot;
 }
   
 void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
@@ -120,7 +119,7 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
     dot = add_complexe_double(dot, multiplication);  
     j += incY;
   }
-  complexe_double_t dotc = dot;
+*(complexe_double_t *)dotc = dot;
 }
 
 
