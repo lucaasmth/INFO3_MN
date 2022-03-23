@@ -9,7 +9,7 @@ void mncblas_scopy(const int N, const float *X, const int incX,
 
   for (; ((i < N) && (j < N)) ; i += incX, j += incY)
     {
-      Y [j] = X [i] ;mncblas_scopy
+      Y [j] = X [i] ;
     }
 
   return ;
