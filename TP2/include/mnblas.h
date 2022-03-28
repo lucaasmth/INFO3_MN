@@ -1,3 +1,5 @@
+#include <stddef.h>
+
 #define CBLAS_INDEX size_t  /* this may vary between platforms */
 
 typedef enum {MNCblasRowMajor=101, MNCblasColMajor=102} MNCBLAS_LAYOUT;
@@ -104,27 +106,34 @@ void mncblas_caxpy(const int N, const void *a, const void *X,
 void mncblas_zaxpy(const int N, const void *a, const void *X,
                  const int incX, void *Y, const int incY);
 
-/*
 
-float  mnblas_sasum(const int N, const float *X, const int incX);
 
-double mnblas_dasum(const int N, const double *X, const int incX);
+float  mncblas_sasum(const int N, const float *X, const int incX);
 
-float  mnblas_scasum(const int N, const void *X, const int incX);
+double mncblas_dasum(const int N, const double *X, const int incX);
 
-double mnblas_dzasum(const int N, const void *X, const int incX);
+float  mncblas_scasum(const int N, const void *X, const int incX);
 
-*/
+double mncblas_dzasum(const int N, const void *X, const int incX);
 
-/*
-CBLAS_INDEX mnblas_isamax(const int N, const float  *X, const int incX);
 
-CBLAS_INDEX mnblas_idamax(const int N, const double *X, const int incX);
+CBLAS_INDEX mncblas_isamin(const int N, const float  *X, const int incX);
 
-CBLAS_INDEX mnblas_icamax(const int N, const void   *X, const int incX);
+CBLAS_INDEX mncblas_idamin(const int N, const double *X, const int incX);
 
-CBLAS_INDEX mnblas_izamax(const int N, const void   *X, const int incX);
-*/
+CBLAS_INDEX mncblas_icamin(const int N, const void   *X, const int incX);
+
+CBLAS_INDEX mncblas_izamin(const int N, const void   *X, const int incX);
+
+
+CBLAS_INDEX mncblas_isamax(const int N, const float  *X, const int incX);
+
+CBLAS_INDEX mncblas_idamax(const int N, const double *X, const int incX);
+
+CBLAS_INDEX mncblas_icamax(const int N, const void   *X, const int incX);
+
+CBLAS_INDEX mncblas_izamax(const int N, const void   *X, const int incX);
+
 
 /*
 float  mnblas_snrm2(const int N, const float *X, const int incX);
