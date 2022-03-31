@@ -4,3 +4,7 @@ test_complexe3
 test_dot
 test_dot_dyn
 test_swap
+/test_asum
+/test_copy
+/test_copy_dyn
+/test_iamin

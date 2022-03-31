@@ -1,4 +1,4 @@
-all: test_complexe3 test_complexe2 test_complexe test_dot test_dot_dyn test_copy test_copy_dyn test_swap test_axpy test_asum test_iamin
+all: test_complexe3 test_complexe2 test_complexe test_dot test_dot_dyn test_copy test_copy_dyn test_swap test_axpy test_asum test_iamin test_iamax
 
 INC_DIR=../include
 
@@ -27,6 +27,9 @@ test_asum: test_asum.o flop.o $(LIB_DIR)/libmnblas.a
 test_iamin: test_iamin.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_iamin test_iamin.o flop.o $(OPTIONS_LINK_STATIC)
 
+test_iamax: test_iamax.o flop.o $(LIB_DIR)/libmnblas.a
+	gcc -o test_iamax test_iamax.o flop.o $(OPTIONS_LINK_STATIC)
+
 test_copy: test_copy.o flop.o $(LIB_DIR)/libmnblas.a
 	gcc -o test_copy test_copy.o flop.o $(OPTIONS_LINK_STATIC)
 
@@ -53,6 +56,9 @@ test_axpy.o: test_axpy.c $(INC_DIR)/mnblas.h
 
 test_iamin.o: test_iamin.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_iamin.c
+
+test_iamax.o: test_iamax.c $(INC_DIR)/mnblas.h
+	gcc $(OPTIONS_COMPIL) -c test_iamax.c
 
 test_asum.o: test_asum.c $(INC_DIR)/mnblas.h
 	gcc $(OPTIONS_COMPIL) -c test_asum.c
