@@ -24,7 +24,7 @@ A :  matrice de taille
 lda :  taille du tableau en une dimension
     si CblasColMajor : lda vaut au entre 1 et m
     si CblasRowMajor : lda vaut au entre 1 et n
-    
+
 x : vecteur
 incX :incrément de X
 
@@ -127,7 +127,7 @@ void mncblas_dgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA, const int M,
 
 void mncblas_cgemv(MNCBLAS_LAYOUT layout, MNCBLAS_TRANSPOSE TransA,
                      const int M, const int N,
-                     const void *alpha, const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY) { // NB OPE FLOTANTE = 8*M*N + 14*M
+                     const void *alpha, const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY) { 
     if(layout == MNCblasRowMajor) {
         if(TransA == MNCblasNoTrans) {
             register complexe_float_t sommeligne ;
