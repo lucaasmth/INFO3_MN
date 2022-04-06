@@ -1,22 +1,6 @@
 #include "mnblas.h"
 #include <stdio.h>
 #include "complexe.h"
-/*
-float mncblas_sdot(const int N, const float *X, const int incX, 
-                 const float *Y, const int incY)
-{
-  register unsigned int i = 0 ;
-  register unsigned int j = 0 ;
-  register float dot = 0.0 ;
-  
-  for (; ((i < N) && (j < N)) ; i += incX, j+=incY)
-    {
-      dot = dot + X [i] * Y [j] ;
-    }
-
-  return dot ;
-}
-*/
 
 float mncblas_sdot(const int N, const float *X, const int incX, 
                  const float *Y, const int incY)
@@ -25,7 +9,7 @@ float mncblas_sdot(const int N, const float *X, const int incX,
   register unsigned int j = 0 ;
   float dot = 0.0 ;
 
-  
+#pragma omp parallel for
   for (i = 0 ; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
@@ -42,7 +26,7 @@ double mncblas_ddot(const int N, const double *X, const int incX,
   register unsigned int j = 0 ;
   double dot = 0.0 ;
 
-  
+#pragma omp parallel for
   for (i = 0 ; i < N ; i += incX)
     {
       dot += X [i] * Y [j] ;
@@ -59,6 +43,7 @@ void   mncblas_cdotu_sub(const int N, const void *X, const int incX,
   register unsigned int j = 0;
   register complexe_float_t dot;
   register complexe_float_t multiplication;
+#pragma omp parallel for
   for (i = 0; i < N; i += incX)
   {
     multiplication = mult_complexe_float(((complexe_float_t *)X)[i], ((complexe_float_t *)Y)[j]); 
@@ -76,6 +61,7 @@ void   mncblas_cdotc_sub(const int N, const void *X, const int incX,
   register complexe_float_t dot;
   register complexe_float_t multiplication;
   register complexe_float_t conjugue_X;
+#pragma omp parallel for
   for (i = 0; i < N; i += incX)
   {
     conjugue_X.real=((complexe_float_t *)X)[i].real;
@@ -94,6 +80,7 @@ void   mncblas_zdotu_sub(const int N, const void *X, const int incX,
   register unsigned int j = 0;
   register complexe_double_t dot;
   register complexe_double_t multiplication;
+#pragma omp parallel for
   for (i = 0; i < N; i += incX)
   {
     multiplication = mult_complexe_double(((complexe_double_t *)X)[i], ((complexe_double_t *)Y)[j]); 
@@ -111,6 +98,7 @@ void   mncblas_zdotc_sub(const int N, const void *X, const int incX,
   register complexe_double_t dot;
   register complexe_double_t multiplication;
   register complexe_double_t conjugue_X;
+#pragma omp parallel for
   for (i = 0; i < N; i += incX)
   {
     conjugue_X.real=((complexe_double_t *)X)[i].real;
