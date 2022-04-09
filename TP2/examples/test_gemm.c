@@ -128,7 +128,7 @@ int main (int argc, char **argv)
 		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
 
 		start_nano = _rdtsc () ;
-        mncblas_zgemm (MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, 10, 10, 10, vcomplexe_float1, vcomplexe_float1, 10, vcomplexe_float2, 10, vcomplexe_float2, vcomplexe_float1, 10) ;
+        mncblas_zgemm (MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, 10, 10, 10, vcomplexe_double1, vcomplexe_double1, 10, vcomplexe_double2, 10, vcomplexe_double2, vcomplexe_double1, 10) ;
 		end_nano = _rdtsc () ;
 
 		calcul_flop_nano ("zgemm nano ", 2 * VECSIZE, end_nano-start_nano) ;
@@ -184,7 +184,7 @@ int main (int argc, char **argv)
 		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
 
 		TOP(start) ;
-        mncblas_zgemm (MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, 10, 10, 10, vcomplexe_float1, vcomplexe_float1, 10, vcomplexe_float2, 10, vcomplexe_float2, vcomplexe_float1, 10) ;
+        mncblas_zgemm (MNCblasRowMajor, MNCblasNoTrans, MNCblasNoTrans, 10, 10, 10, vcomplexe_double1, vcomplexe_double1, 10, vcomplexe_double2, 10, vcomplexe_double2, vcomplexe_double1, 10) ;
 		TOP(end) ;
 
 		calcul_flop_micro ("zgemm micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
