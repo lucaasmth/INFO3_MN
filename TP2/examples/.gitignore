@@ -11,3 +11,4 @@
 /test_axpy
 /test_iamax
 /test_nrm2
+/test_gemm
