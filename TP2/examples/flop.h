@@ -13,4 +13,4 @@ void calcul_flop_micro (char *message, unsigned int nb_operations_flottantes, fl
 
 void calcul_flop_nano (char *message, int nb_operations_flottantes, unsigned long long int cycles) ;
 
-void calcul_byte(char *message, int nb_mouvement, unsigned long long int cycles);
+float calcul_byte(char *message, int nb_mouvement, unsigned long long int cycles);

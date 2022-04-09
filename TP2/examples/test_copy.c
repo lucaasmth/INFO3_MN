@@ -79,7 +79,7 @@ int main (int argc, char **argv)
 
 //	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
-
+    float moy = 0;
 	// Test nano de scopy
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
@@ -90,8 +90,10 @@ int main (int argc, char **argv)
 			mncblas_scopy (VECSIZE, vfloat1, 1, vfloat1, 1) ;
 		end_nano = _rdtsc () ;
 
-        calcul_byte("scopy", VECSIZE * sizeof(float), end_nano-start_nano) ;
+        moy += calcul_byte("scopy", VECSIZE * sizeof(float), end_nano-start_nano) ;
 	}
+    printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de dcopy
@@ -104,8 +106,10 @@ int main (int argc, char **argv)
 			mncblas_dcopy (VECSIZE, vdouble1, 1, vdouble2, 1) ;
 		end_nano = _rdtsc () ;
 
-        calcul_byte("dcopy", VECSIZE * sizeof(double), end_nano-start_nano) ;
+        moy += calcul_byte("dcopy", VECSIZE * sizeof(double), end_nano-start_nano) ;
 	}
+    printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de ccopy
@@ -118,8 +122,10 @@ int main (int argc, char **argv)
 			mncblas_ccopy (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
 		end_nano = _rdtsc () ;
 
-        calcul_byte("ccopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
+        moy += calcul_byte("ccopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
 	}
+    printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de zcopy
@@ -132,6 +138,8 @@ int main (int argc, char **argv)
         mncblas_zcopy(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("zcopy", VECSIZE * sizeof(double) * 2, end_nano - start_nano);
+        moy += calcul_byte("zcopy", VECSIZE * sizeof(double) * 2, end_nano - start_nano);
     }
+    printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 }
