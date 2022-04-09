@@ -46,14 +46,14 @@ void init_flop_nano ()
 
 float calcul_flop_micro (char *message, unsigned int nb_operations_flottantes, float duree)
 {
-  printf ("%s %d operations duree %.7f seconde  Performance %5.3f GFLOP/s\n", message, nb_operations_flottantes, duree, ((float) nb_operations_flottantes / duree)/1000000000) ;
+  //printf ("%s %d operations duree %.7f seconde  Performance %5.3f GFLOP/s\n", message, nb_operations_flottantes, duree, ((float) nb_operations_flottantes / duree)/1000000000) ;
   return (((float) nb_operations_flottantes / duree)/1000000000) ;
 }
 
 float calcul_flop_nano (char *message, int nb_operations_flottantes, unsigned long long int cycles)
 {
-  printf ("%s %d operations %Ld cycles Performance %5.3f GFLOP/s\n", message, nb_operations_flottantes, cycles, ((float) nb_operations_flottantes) 
-/ (((float) cycles) * duree_cycle)) ;
+  //printf ("%s %d operations %Ld cycles Performance %5.3f GFLOP/s\n", message, nb_operations_flottantes, cycles, ((float) nb_operations_flottantes) 
+/// (((float) cycles) * duree_cycle)) ;
   return ((float) nb_operations_flottantes/ (((float) cycles) * duree_cycle));
 }
 

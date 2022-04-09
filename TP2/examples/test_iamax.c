@@ -137,7 +137,7 @@ int main (int argc, char **argv)
 			mncblas_izamax (VECSIZE, vcomplexe_double1, 1) ;
 		end_nano = _rdtsc () ;
 
-		moy+calcul_flop_nano ("izamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy+=calcul_flop_nano ("izamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
 	printf("moy = %5.3f\n", moy / NB_FOIS);
     moy = 0;
