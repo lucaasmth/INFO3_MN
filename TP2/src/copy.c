@@ -35,18 +35,11 @@ void mncblas_ccopy(const int N, const void *X, const int incX,
 
     register unsigned int i = 0 ;
 
-    complexe_float_t* X_copy = (complexe_float_t *) X;
-    complexe_float_t* Y_copy = (complexe_float_t *) Y;
-
 #pragma omp parallel for
     for (i=0; i < N ; i++)
     {
-        Y_copy[i] = X_copy[i];
+        *((complexe_float_t*)(Y+i)) = *((complexe_float_t*)(X+i)) ;
     }
-
-    X = (void *) X_copy;
-    Y = (void *) Y_copy;
-
     return ;
 
 }
@@ -56,18 +49,11 @@ void mncblas_zcopy(const int N, const void *X, const int incX,
 {
     register unsigned int i = 0 ;
 
-    complexe_double_t* X_copy = (complexe_double_t *) X;
-    complexe_double_t* Y_copy = (complexe_double_t *) Y;
-
 #pragma omp parallel for
     for (i=0; i < N ; i++)
     {
-        Y_copy[i] = X_copy[i];
+        *((complexe_double_t*)(Y+i)) = *((complexe_double_t*)(X+i)) ;
     }
-
-    X = (void *) X_copy;
-    Y = (void *) Y_copy;
-
     return ;
 }
 

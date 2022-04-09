@@ -104,7 +104,7 @@ int main (int argc, char **argv)
 			mncblas_dcopy (VECSIZE, vdouble1, 1, vdouble2, 1) ;
 		end_nano = _rdtsc () ;
 
-        calcul_byte("dcopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
+        calcul_byte("dcopy", VECSIZE * sizeof(double), end_nano-start_nano) ;
 	}
 	printf ("==========================================================\n") ;
 
@@ -132,6 +132,6 @@ int main (int argc, char **argv)
         mncblas_zcopy(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("zcopy", VECSIZE * sizeof(float) * 4, end_nano - start_nano);
+        calcul_byte("zcopy", VECSIZE * sizeof(double) * 2, end_nano - start_nano);
     }
 }

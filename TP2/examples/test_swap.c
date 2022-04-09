@@ -74,120 +74,65 @@ void vector_print (vfloat V)
 	return ;
 }
 
-int main (int argc, char **argv)
-{
-	struct timeval start, end ;
-	unsigned long long int start_nano, end_nano ;
+int main (int argc, char **argv) {
+//	struct timeval start, end ;
+    unsigned long long int start_nano, end_nano;
 
-	// Test nano de sswap
-	init_flop_nano () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vfloat_init (vfloat1, 1.0) ;
-		vfloat_init (vfloat2, 2.0) ;
+    // Test nano de sswap
+    init_flop_nano();
+    for (int i = 0; i < NB_FOIS; i++) {
+        vfloat_init(vfloat1, 1.0);
+        vfloat_init(vfloat2, 2.0);
 
-		start_nano = _rdtsc () ;
-			mncblas_sswap (VECSIZE, vfloat1, 1, vfloat1, 1) ;
-		end_nano = _rdtsc () ;
+        start_nano = _rdtsc ();
+        mncblas_sswap(VECSIZE, vfloat1, 1, vfloat1, 1);
+        end_nano = _rdtsc ();
 
-		calcul_flop_nano ("sswap nano ", 2 * VECSIZE, end_nano-start_nano) ;
-	}
-	printf ("==========================================================\n") ;
+        calcul_byte("sswap", VECSIZE * sizeof(float) * 3, end_nano - start_nano);
+    }
+    printf("==========================================================\n");
 
-	// Test nano de dswap
-	init_flop_nano () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vdouble_init (vdouble1, 1.0) ;
-		vdouble_init (vdouble2, 2.0) ;
+    // Test nano de dswap
+    init_flop_nano();
+    for (int i = 0; i < NB_FOIS; i++) {
+        vdouble_init(vdouble1, 1.0);
+        vdouble_init(vdouble2, 2.0);
 
-		start_nano = _rdtsc () ;
-			mncblas_dswap (VECSIZE, vdouble1, 1, vdouble2, 1) ;
-		end_nano = _rdtsc () ;
+        start_nano = _rdtsc ();
+        mncblas_dswap(VECSIZE, vdouble1, 1, vdouble2, 1);
+        end_nano = _rdtsc ();
 
-		calcul_flop_nano ("dswap nano ", 2 * VECSIZE, end_nano-start_nano) ;
-	}
-	printf ("==========================================================\n") ;
+        calcul_byte("dswap", VECSIZE * sizeof(double) * 3, end_nano - start_nano);
 
-	// Test nano de cswap
-	init_flop_nano () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_float_init (vcomplexe_float1, 1.0, 1.0) ;
-		vcomplexe_float_init (vcomplexe_float2, 2.0, 2.0) ;
+    }
+    printf("==========================================================\n");
 
-		start_nano = _rdtsc () ;
-			mncblas_cswap (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
-		end_nano = _rdtsc () ;
+    // Test nano de cswap
+    init_flop_nano();
+    for (int i = 0; i < NB_FOIS; i++) {
+        vcomplexe_float_init(vcomplexe_float1, 1.0, 1.0);
+        vcomplexe_float_init(vcomplexe_float2, 2.0, 2.0);
 
-		calcul_flop_nano ("cswap nano ", 2 * VECSIZE, end_nano-start_nano) ;
-	}
-	printf ("==========================================================\n") ;
+        start_nano = _rdtsc ();
+        mncblas_cswap(VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1);
+        end_nano = _rdtsc ();
 
-	// Test nano de zswap
-	init_flop_nano () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_double_init (vcomplexe_double1, 1.0, 1.0) ;
-		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
+        calcul_byte("cswap", VECSIZE * sizeof(float) * 6, end_nano - start_nano);
 
-		start_nano = _rdtsc () ;
-			mncblas_zswap (VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
-		end_nano = _rdtsc () ;
+    }
+    printf("==========================================================\n");
 
-		calcul_flop_nano ("zswap nano ", 2 * VECSIZE, end_nano-start_nano) ;
-	}
-	printf ("==========================================================\n") ;
- 
-	// Test micro de sswap
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vfloat_init (vfloat1, 1.0) ;
-		vfloat_init (vfloat2, 2.0) ;
+    // Test nano de zswap
+    init_flop_nano();
+    for (int i = 0; i < NB_FOIS; i++) {
+        vcomplexe_double_init(vcomplexe_double1, 1.0, 1.0);
+        vcomplexe_double_init(vcomplexe_double2, 2.0, 2.0);
 
-		TOP(start) ;
-		mncblas_sswap (VECSIZE, vfloat1, 1, vfloat2, 1) ;
-		TOP(end) ;
+        start_nano = _rdtsc ();
+        mncblas_zswap(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
+        end_nano = _rdtsc ();
 
-		calcul_flop_micro ("sswap micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
+        calcul_byte("zswap", VECSIZE * sizeof(double) * 6, end_nano - start_nano);
 
-	// Test micro de dswap
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vdouble_init (vdouble1, 1.0) ;
-		vdouble_init (vdouble2, 2.0) ;
-
-		TOP(start) ;
-		mncblas_dswap (VECSIZE, vdouble1, 1, vdouble2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("dswap micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
-
-	// Test micro de cswap
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_float_init (vcomplexe_float1, 1.0, 1.0) ;
-		vcomplexe_float_init (vcomplexe_float2, 2.0, 2.0) ;
-
-		TOP(start) ;
-		mncblas_cswap (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("cswap micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
-
-	// Test micro de zswap
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_double_init (vcomplexe_double1, 1.0, 1.0) ;
-		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
-
-		TOP(start) ;
-		mncblas_zswap (VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("zswap micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
+    }
 }
