@@ -7,7 +7,7 @@
 
 #define VECSIZE    65536
 
-#define NB_FOIS    10
+#define NB_FOIS    1000
 
 typedef float vfloat [VECSIZE] ;
 typedef double vdouble [VECSIZE] ;
@@ -77,7 +77,7 @@ void vector_print (vfloat V)
 int main (int argc, char **argv) {
 //	struct timeval start, end ;
     unsigned long long int start_nano, end_nano;
-
+    float moys = 0, moyd = 0, moyc = 0, moyz = 0;
     // Test nano de sswap
     init_flop_nano();
     for (int i = 0; i < NB_FOIS; i++) {
@@ -88,7 +88,7 @@ int main (int argc, char **argv) {
         mncblas_sswap(VECSIZE, vfloat1, 1, vfloat1, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("sswap", VECSIZE * sizeof(float) * 3, end_nano - start_nano);
+        moys += calcul_byte("sswap", VECSIZE * sizeof(float) * 3, end_nano - start_nano);
     }
     printf("==========================================================\n");
 
@@ -102,7 +102,7 @@ int main (int argc, char **argv) {
         mncblas_dswap(VECSIZE, vdouble1, 1, vdouble2, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("dswap", VECSIZE * sizeof(double) * 3, end_nano - start_nano);
+        moyd += calcul_byte("dswap", VECSIZE * sizeof(double) * 3, end_nano - start_nano);
 
     }
     printf("==========================================================\n");
@@ -117,7 +117,7 @@ int main (int argc, char **argv) {
         mncblas_cswap(VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("cswap", VECSIZE * sizeof(float) * 6, end_nano - start_nano);
+        moyc += calcul_byte("cswap", VECSIZE * sizeof(float) * 6, end_nano - start_nano);
 
     }
     printf("==========================================================\n");
@@ -132,7 +132,12 @@ int main (int argc, char **argv) {
         mncblas_zswap(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
         end_nano = _rdtsc ();
 
-        calcul_byte("zswap", VECSIZE * sizeof(double) * 6, end_nano - start_nano);
+        moyz += calcul_byte("zswap", VECSIZE * sizeof(double) * 6, end_nano - start_nano);
 
     }
+
+    printf("moys %5.3f\n", moys / NB_FOIS);
+    printf("moyd %5.3f\n", moyd / NB_FOIS);
+    printf("moyc %5.3f\n", moyc / NB_FOIS);
+    printf("moyz %5.3f\n", moyz / NB_FOIS);
 }

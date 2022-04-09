@@ -7,7 +7,7 @@
 
 #define VECSIZE    65536
 
-#define NB_FOIS    10
+#define NB_FOIS    1000
 
 typedef float vfloat [VECSIZE] ;
 typedef double vdouble [VECSIZE] ;
@@ -79,7 +79,7 @@ int main (int argc, char **argv)
 
 //	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
-    float moy = 0;
+    float moys = 0, moyd = 0, moyc = 0, moyz = 0;
 	// Test nano de scopy
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
@@ -90,10 +90,8 @@ int main (int argc, char **argv)
 			mncblas_scopy (VECSIZE, vfloat1, 1, vfloat1, 1) ;
 		end_nano = _rdtsc () ;
 
-        moy += calcul_byte("scopy", VECSIZE * sizeof(float), end_nano-start_nano) ;
+        moys += calcul_byte("scopy", VECSIZE * sizeof(float), end_nano-start_nano) ;
 	}
-    printf("moy = %5.3f\n", moy / NB_FOIS);
-    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de dcopy
@@ -106,10 +104,8 @@ int main (int argc, char **argv)
 			mncblas_dcopy (VECSIZE, vdouble1, 1, vdouble2, 1) ;
 		end_nano = _rdtsc () ;
 
-        moy += calcul_byte("dcopy", VECSIZE * sizeof(double), end_nano-start_nano) ;
+        moyd += calcul_byte("dcopy", VECSIZE * sizeof(double), end_nano-start_nano) ;
 	}
-    printf("moy = %5.3f\n", moy / NB_FOIS);
-    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de ccopy
@@ -122,10 +118,8 @@ int main (int argc, char **argv)
 			mncblas_ccopy (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
 		end_nano = _rdtsc () ;
 
-        moy += calcul_byte("ccopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
+        moyc += calcul_byte("ccopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
 	}
-    printf("moy = %5.3f\n", moy / NB_FOIS);
-    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de zcopy
@@ -138,8 +132,11 @@ int main (int argc, char **argv)
         mncblas_zcopy(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
         end_nano = _rdtsc ();
 
-        moy += calcul_byte("zcopy", VECSIZE * sizeof(double) * 2, end_nano - start_nano);
+        moyz += calcul_byte("zcopy", VECSIZE * sizeof(double) * 2, end_nano - start_nano);
     }
-    printf("moy = %5.3f\n", moy / NB_FOIS);
-    moy = 0;
+
+    printf("moys %5.3f\n", moys / NB_FOIS);
+    printf("moyd %5.3f\n", moyd / NB_FOIS);
+    printf("moyc %5.3f\n", moyc / NB_FOIS);
+    printf("moyz %5.3f\n", moyz / NB_FOIS);
 }
