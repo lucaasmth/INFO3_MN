@@ -76,7 +76,8 @@ void vector_print (vfloat V)
 
 int main (int argc, char **argv)
 {
-	struct timeval start, end ;
+
+//	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
 
 	// Test nano de scopy
@@ -89,7 +90,7 @@ int main (int argc, char **argv)
 			mncblas_scopy (VECSIZE, vfloat1, 1, vfloat1, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("scopy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+        calcul_byte("scopy", VECSIZE * sizeof(float), end_nano-start_nano) ;
 	}
 	printf ("==========================================================\n") ;
 
@@ -103,7 +104,7 @@ int main (int argc, char **argv)
 			mncblas_dcopy (VECSIZE, vdouble1, 1, vdouble2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("dcopy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+        calcul_byte("dcopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
 	}
 	printf ("==========================================================\n") ;
 
@@ -117,77 +118,20 @@ int main (int argc, char **argv)
 			mncblas_ccopy (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("ccopy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+        calcul_byte("ccopy", VECSIZE * sizeof(float) * 2, end_nano-start_nano) ;
 	}
 	printf ("==========================================================\n") ;
 
 	// Test nano de zcopy
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_double_init (vcomplexe_double1, 1.0, 1.0) ;
-		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
+        vcomplexe_double_init(vcomplexe_double1, 1.0, 1.0);
+        vcomplexe_double_init(vcomplexe_double2, 2.0, 2.0);
 
-		start_nano = _rdtsc () ;
-			mncblas_zcopy (VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
-		end_nano = _rdtsc () ;
+        start_nano = _rdtsc ();
+        mncblas_zcopy(VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1);
+        end_nano = _rdtsc ();
 
-		calcul_flop_nano ("zcopy nano ", 2 * VECSIZE, end_nano-start_nano) ;
-	}
-	printf ("==========================================================\n") ;
- 
-	// Test micro de scopy
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vfloat_init (vfloat1, 1.0) ;
-		vfloat_init (vfloat2, 2.0) ;
-
-		TOP(start) ;
-		mncblas_scopy (VECSIZE, vfloat1, 1, vfloat2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("scopy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
-
-	// Test micro de dcopy
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vdouble_init (vdouble1, 1.0) ;
-		vdouble_init (vdouble2, 2.0) ;
-
-		TOP(start) ;
-		mncblas_dcopy (VECSIZE, vdouble1, 1, vdouble2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("dcopy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
-
-	// Test micro de ccopy
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_float_init (vcomplexe_float1, 1.0, 1.0) ;
-		vcomplexe_float_init (vcomplexe_float2, 2.0, 2.0) ;
-
-		TOP(start) ;
-		mncblas_ccopy (VECSIZE, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("ccopy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
-
-	// Test micro de zcopy
-	init_flop_micro () ;
-	for (int i = 0 ; i < NB_FOIS; i++) {
-		vcomplexe_double_init (vcomplexe_double1, 1.0, 1.0) ;
-		vcomplexe_double_init (vcomplexe_double2, 2.0, 2.0) ;
-
-		TOP(start) ;
-		mncblas_zcopy (VECSIZE, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
-		TOP(end) ;
-
-		calcul_flop_micro ("zcopy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
-	}
- 	printf ("==========================================================\n") ;
+        calcul_byte("zcopy", VECSIZE * sizeof(float) * 4, end_nano - start_nano);
+    }
 }
