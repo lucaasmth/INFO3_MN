@@ -78,7 +78,7 @@ int main (int argc, char **argv)
 {
 	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
-
+	float moy=0;
 	// Test nano de saxpy
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
@@ -89,8 +89,11 @@ int main (int argc, char **argv)
 			mncblas_saxpy (VECSIZE, vfloat1[0], vfloat1, 1, vfloat2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("saxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy+=calcul_flop_nano ("saxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de daxpy
@@ -103,8 +106,11 @@ int main (int argc, char **argv)
 			mncblas_daxpy (VECSIZE, vdouble1[0], vdouble1, 1, vdouble2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("daxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy+=calcul_flop_nano ("daxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de caxpy
@@ -117,8 +123,10 @@ int main (int argc, char **argv)
 			mncblas_caxpy (VECSIZE, vcomplexe_float1, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("caxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy+=calcul_flop_nano ("caxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de zaxpy
@@ -131,8 +139,10 @@ int main (int argc, char **argv)
 			mncblas_zaxpy (VECSIZE, vcomplexe_double1, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("zaxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy+=calcul_flop_nano ("zaxpy nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
  
 	// Test micro de saxpy
@@ -145,8 +155,10 @@ int main (int argc, char **argv)
 		mncblas_saxpy (VECSIZE, vfloat1[0], vfloat1, 1, vfloat2, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("saxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy+=calcul_flop_micro ("saxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de daxpy
@@ -159,8 +171,10 @@ int main (int argc, char **argv)
 		mncblas_daxpy (VECSIZE, vdouble1[0], vdouble1, 1, vdouble2, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("daxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy+=calcul_flop_micro ("daxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de caxpy
@@ -173,8 +187,10 @@ int main (int argc, char **argv)
 		mncblas_caxpy (VECSIZE, vcomplexe_float1, vcomplexe_float1, 1, vcomplexe_float2, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("caxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy+=calcul_flop_micro ("caxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de zaxpy
@@ -187,7 +203,9 @@ int main (int argc, char **argv)
 		mncblas_zaxpy (VECSIZE, vcomplexe_double1, vcomplexe_double1, 1, vcomplexe_double2, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("zaxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy+=calcul_flop_micro ("zaxpy micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 }
