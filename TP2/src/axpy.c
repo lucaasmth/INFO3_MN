@@ -12,7 +12,7 @@ void mncblas_saxpy(const int N, const float a, const float *X, const int incX,
     #pragma omp parallel for
   for (i = 0 ; i < N ; i += incX)
     {
-      Y[j] += a * X [i] * Y [j] ;
+      Y[j] = a * X [i] + Y[j] ;
       j+=incY ;
     }
 
@@ -26,7 +26,7 @@ void mncblas_daxpy(const int N, const double a, const double *X, const int incX,
 
 #pragma omp parallel for
     for (i = 0 ; i < N ; i += incX){
-        Y[j] += a * X [i] * Y [j] ;
+        Y[j] = a * X [i] + Y[j] ;
         j+=incY ;
     }
 }

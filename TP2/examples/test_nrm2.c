@@ -7,7 +7,7 @@
 
 #define VECSIZE    65536
 
-#define NB_FOIS    10
+#define NB_FOIS    1000
 
 typedef float vfloat [VECSIZE] ;
 typedef double vdouble [VECSIZE] ;
@@ -78,7 +78,7 @@ int main (int argc, char **argv)
 {
 	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
-
+	float moy = 0;
 	// Test nano de isamax
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
@@ -89,8 +89,10 @@ int main (int argc, char **argv)
         mnblas_snrm2 (VECSIZE, vfloat1, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("isamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("isamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de idamax
@@ -103,8 +105,10 @@ int main (int argc, char **argv)
         mnblas_dnrm2 (VECSIZE, vdouble1, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("idamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("idamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de icamax
@@ -117,8 +121,10 @@ int main (int argc, char **argv)
         mnblas_scnrm2 (VECSIZE, vcomplexe_float1, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("icamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("icamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de izamax
@@ -131,8 +137,10 @@ int main (int argc, char **argv)
         mnblas_dznrm2 (VECSIZE, vcomplexe_double1, 1) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("izamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("izamax nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
  
 	// Test micro de isamax
@@ -145,8 +153,10 @@ int main (int argc, char **argv)
         mnblas_snrm2 (VECSIZE, vfloat1, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("isamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("isamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de idamax
@@ -159,8 +169,10 @@ int main (int argc, char **argv)
         mnblas_dnrm2 (VECSIZE, vdouble1, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("idamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("idamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de icamax
@@ -173,8 +185,10 @@ int main (int argc, char **argv)
         mnblas_scnrm2 (VECSIZE, vcomplexe_float1, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("icamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("icamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de izamax
@@ -187,7 +201,9 @@ int main (int argc, char **argv)
         mnblas_dznrm2 (VECSIZE, vcomplexe_double1, 1) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("izamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("izamax micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 }

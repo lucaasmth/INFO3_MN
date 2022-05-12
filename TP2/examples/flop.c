@@ -58,6 +58,6 @@ float calcul_flop_nano (char *message, int nb_operations_flottantes, unsigned lo
 }
 
 float calcul_byte(char *message, int nb_mouvement, unsigned long long int cycles) {
-    printf ("%s %d operations %5.3f GBytes/s\n", message, nb_mouvement, ((float)nb_mouvement) / (((float) cycles) * duree_cycle)) ;
+    //printf ("%s %d operations %5.3f GBytes/s\n", message, nb_mouvement, ((float)nb_mouvement) / (((float) cycles) * duree_cycle)) ;
     return ((float)nb_mouvement) / (((float) cycles) * duree_cycle);
 }

@@ -7,7 +7,7 @@
 
 #define VECSIZE    65536
 
-#define NB_FOIS    10
+#define NB_FOIS    1000
 
 typedef float vfloat [VECSIZE] ;
 typedef double vdouble [VECSIZE] ;
@@ -78,7 +78,7 @@ int main (int argc, char **argv)
 {
 	struct timeval start, end ;
 	unsigned long long int start_nano, end_nano ;
-
+	float moy = 0;
 	// Test nano de sgemv
 	init_flop_nano () ;
 	for (int i = 0 ; i < NB_FOIS; i++) {
@@ -89,8 +89,10 @@ int main (int argc, char **argv)
         mncblas_sgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, 3.0, vfloat1, 10, vfloat2, 10, 1.0, vfloat2, 10) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("sgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("sgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de dgemv
@@ -103,8 +105,10 @@ int main (int argc, char **argv)
         mncblas_dgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, 3.0, vdouble1, 10, vdouble2, 10, 1.0, vdouble2, 10) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("dgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("dgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de cgemv
@@ -117,8 +121,10 @@ int main (int argc, char **argv)
         mncblas_cgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, vcomplexe_float1, vcomplexe_float1, 10, vcomplexe_float2, 10, vcomplexe_float1, vcomplexe_float2, 10) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("cgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("cgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
 
 	// Test nano de zgemv
@@ -131,8 +137,10 @@ int main (int argc, char **argv)
         mncblas_zgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, vcomplexe_double1, vcomplexe_double1, 10, vcomplexe_double2, 10, vcomplexe_double1, vcomplexe_double2, 10) ;
 		end_nano = _rdtsc () ;
 
-		calcul_flop_nano ("zgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
+		moy += calcul_flop_nano ("zgemv nano ", 2 * VECSIZE, end_nano-start_nano) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
 	printf ("==========================================================\n") ;
  
 	// Test micro de sgemv
@@ -145,8 +153,10 @@ int main (int argc, char **argv)
 		mncblas_sgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, 3.0, vfloat1, 10, vfloat2, 10, 1.0, vfloat2, 10) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("sgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("sgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de dgemv
@@ -159,8 +169,10 @@ int main (int argc, char **argv)
         mncblas_dgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, 3.0, vdouble1, 10, vdouble2, 10, 1.0, vdouble2, 10) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("dgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("dgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de cgemv
@@ -173,8 +185,10 @@ int main (int argc, char **argv)
         mncblas_cgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, vcomplexe_float1, vcomplexe_float1, 10, vcomplexe_float2, 10, vcomplexe_float1, vcomplexe_float2, 10) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("cgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("cgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 
 	// Test micro de zgemv
@@ -187,7 +201,9 @@ int main (int argc, char **argv)
         mncblas_zgemv (MNCblasRowMajor, MNCblasNoTrans, 10, 10, vcomplexe_double1, vcomplexe_double1, 10, vcomplexe_double2, 10, vcomplexe_double1, vcomplexe_double2, 10) ;
 		TOP(end) ;
 
-		calcul_flop_micro ("zgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
+		moy += calcul_flop_micro ("zgemv micro", 2 * VECSIZE, tdiff_micro (&start, &end)) ;
 	}
+	printf("moy = %5.3f\n", moy / NB_FOIS);
+    moy = 0;
  	printf ("==========================================================\n") ;
 }
